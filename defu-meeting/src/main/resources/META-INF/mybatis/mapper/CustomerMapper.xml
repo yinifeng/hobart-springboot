@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.defu.meeting.dao.CustomerDao">
+		<!-- 插入数据 -->
+	<insert id="insert" parameterType="com.defu.meeting.model.Customer">
+		<!-- 
+			获取插入数据后的主键
+			1、mysql自增    相对insert语句after
+			2、oracle 序列     select 序列.nextval()  相对insert语句 before
+		 -->
+		<selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+			select LAST_INSERT_ID()
+		</selectKey>
+		insert into df_customer(name,tel,sex,company,siginStatus,seatId,crt_time,up_time,enable_flg) 
+		values (#{name},#{tel},#{sex},#{company},#{siginStatus},#{seatId},#{crt_time},#{up_time},#{enable_flg})
+	</insert>
+
+
+	<select id="list" resultType="com.defu.meeting.vo.CustomerVo">
+		SELECT
+		c.id,
+		c. NAME,
+		c.tel,
+		c.sex,
+		c.company,
+		c.siginStatus,
+		c.seatId,
+		s.seatName
+		FROM
+		df_customer c
+		left join
+		df_seat s
+		on c.seatId = s.id
+		WHERE
+		c.enable_flg = '1'
+	</select>
+	
+	<select id="getCustomerById" resultType="com.defu.meeting.vo.CustomerVo">
+		SELECT
+		c.id,
+		c. NAME,
+		c.tel,
+		c.sex,
+		c.company,
+		c.siginStatus,
+		c.seatId,
+		s.seatName
+		FROM
+		df_customer c 
+		left join 
+		 df_seat s
+		on c.seatId = s.id
+		WHERE
+		c.id=#{id}
+		AND c.enable_flg = '1'
+	</select>
+	
+	<select id="getCustomerByTel" resultType="com.defu.meeting.vo.CustomerVo">
+		SELECT
+		c.id,
+		c.NAME,
+		c.tel,
+		c.sex,
+		c.company,
+		c.siginStatus,
+		c.seatId,
+		s.seatName
+		FROM
+			df_customer c
+		left join
+			df_seat s
+		on c.seatId = s.id
+		WHERE
+		c.tel=#{tel}
+		AND c.enable_flg = '1'
+	</select>
+	
+	<update id="updateCustomerSiginStatus">
+		update df_customer set siginStatus=#{siginStatus},up_time=now() where id=#{id} and enable_flg='1'
+	</update>
+	
+	<update id="updateCustomer" parameterType="com.defu.meeting.model.Customer">
+		update df_customer set name=#{customer.name},tel=#{customer.tel},sex=#{customer.sex},company=#{customer.company},siginStatus=#{customer.siginStatus},
+		seatId=#{customer.seatId},up_time=#{customer.up_time} where id=#{customer.id} and enable_flg='1'
+	</update>
+
+</mapper>

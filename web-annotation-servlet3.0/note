@@ -1,0 +1,8 @@
+Tomcat 7.0 及以上版本支持Servlet3.0
+
+#运行时插件能力
+Servlet容器启动应用会扫描当前应用的每一个jar包的ServletContainerInitializer的实现类
+全类名
+
+实现类配置在这个文件中
+META-INF/services/javax.servlet.ServletContainerInitializer

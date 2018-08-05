@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+ 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+	<title>管理员登录</title>
+    <!-- Bootstrap core CSS asserts/css/bootstrap.min.css -->
+    <link href="" th:href="@{/webjars/bootstrap/4.0.0/css/bootstrap.css}" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <!-- floating-labels.css -->
+    <link href="" th:href="@{/asserts/css/signin.css}" rel="stylesheet">
+</head>
+
+<body>
+<div class="container">
+    <form class="form-signin" th:action="@{/admin/login}" method="post">
+      <div class="text-center mb-4">
+        <img class="mb-4" src="https://getbootstrap.com/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
+        <h1 class="h3 mb-3 font-weight-normal">管理员登录</h1>
+        <!-- <p>Build form controls with floating labels via the <code>:placeholder-shown</code> pseudo-element. <a href="https://caniuse.com/#feat=css-placeholder-shown">Works in latest Chrome, Safari, and Firefox.</a></p> -->
+        <p style="color: red" th:text="${adminMsg}" th:if="${not #strings.isEmpty(adminMsg)}"></p>
+      </div>
+      <div class="form-label-group">
+      	<!-- placeholder="Email address" -->
+        <input type="text" name="username" id="inputUsername" class="form-control" placeholder="用户名" required autofocus>
+        <label for="inputUsername">用户名</label>
+      </div>
+
+      <div class="form-label-group">
+        <input type="password" name="password" id="inputPassword" class="form-control" placeholder="密码" required>
+        <label for="inputPassword">密码</label>
+      </div>
+      <div class="checkbox mb-3">
+        <label>
+          <input type="checkbox" value="remember-me"> 记住我
+        </label>
+      </div>
+      <button class="btn btn-lg btn-primary btn-block" type="submit">登 录</button>
+      <p class="mt-5 mb-3 text-muted text-center">&copy; 2017-2018</p>
+    </form>
+  </div>  
+  </body>
+</html>

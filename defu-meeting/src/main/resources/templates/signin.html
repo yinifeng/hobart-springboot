@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>签到</title>
+	<meta name="author" content="" />
+	<meta name="description" content="" />
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+	<link href="css/font-awesome.min.css" th:href="@{/asserts/css/font-awesome.min.css}" rel="stylesheet">
+	<link href="css/bootstrap.css" th:href="@{/webjars/bootstrap/4.0.0/css/bootstrap.css}" rel="stylesheet">
+	<link href="css/bootstrap-theme.min.css" th:href="@{/asserts/css/bootstrap-theme.min.css}" rel="stylesheet">
+	<link href="css/templatemo_style.css" th:href="@{/asserts/css/templatemo_style.css}" rel="stylesheet">
+</head>
+<!-- class="templatemo-bg-gray" -->
+<body th:class="${customer==null ? 'templatemo-bg-gray' : ''}">
+	<div class="container">
+		<div class="col-md-12" th:if="${customer==null}">
+			<h1 class="margin-bottom-15">Meeting Sign In</h1>
+			<form class="form-horizontal templatemo-container templatemo-login-form-1 margin-bottom-30" role="form" th:action="@{/meeting/signin}" method="post">				
+		        <div class="form-group">
+		          <div class="col-xs-12">		            
+		            	<label for="username" class="control-label fa-label">姓名</label>
+		            	<input type="text" name="username" class="form-control" id="username" placeholder="姓名" required>
+		          </div>              
+		        </div>
+		        <div class="form-group">
+		          <div class="col-xs-12">
+		            	<label for="tel" class="control-label fa-label">电话</label>
+		            	<input type="text" name="tel" class="form-control" id="tel" placeholder="电话" required>
+		          </div>
+		        </div>
+		        <div class="form-group">
+		          <div class="col-xs-12">
+		          	<div class="control-wrapper">
+		          		<div class="text-right">
+		          			<input type="submit" value="签到" class="btn btn-info">
+		          		</div>
+		          	</div>
+		          </div>
+		        </div>
+		        <b class="text-left" style="color: red" th:text="${signinMsg}" th:if="${not #strings.isEmpty(signinMsg)}"></b>
+		      </form>
+		</div>
+		<div class="col-md-12" th:if="${customer!=null}">
+				<!-- <h3></h3> -->
+			<div class="table-responsive text-center">
+  				<table class="table table-sm table-hover table-condensed table-bordered">
+   					 <thead class="thead-light">
+   					 	<tr>
+   					 		<th>姓名</th>
+   					 		<th>电话</th>
+   					 		<th>座位</th>
+   					 		<th>状态</th>
+   					 	</tr>
+					</thead>
+					<tbody>
+						<tr class="table-success">
+							<td>[[${customer.name}]]</td>
+							<td>[[${customer.tel}]]</td>
+							<td th:text="${#strings.isEmpty(customer.seatName)} ? '无座' : ${customer.seatName}"></td>
+							<td>[[${customer.siginStatusName}]]</td>
+						</tr>
+					</tbody>
+ 				 </table>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

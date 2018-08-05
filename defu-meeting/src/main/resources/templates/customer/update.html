@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<!-- saved from url=(0052)http://getbootstrap.com/docs/4.0/examples/dashboard/ -->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<meta name="description" content="">
+		<meta name="author" content="">
+
+		<title>客户修改页面</title>
+		<!-- Bootstrap core CSS -->
+		<link href="asserts/css/bootstrap.min.css" th:href="@{/webjars/bootstrap/4.0.0/css/bootstrap.css}" rel="stylesheet">
+
+		<!-- Custom styles for this template -->
+		<link href="asserts/css/dashboard.css" th:href="@{/asserts/css/dashboard.css}" rel="stylesheet">
+		<style type="text/css">
+			/* Chart.js */
+			
+			@-webkit-keyframes chartjs-render-animation {
+				from {
+					opacity: 0.99
+				}
+				to {
+					opacity: 1
+				}
+			}
+			
+			@keyframes chartjs-render-animation {
+				from {
+					opacity: 0.99
+				}
+				to {
+					opacity: 1
+				}
+			}
+			
+			.chartjs-render-monitor {
+				-webkit-animation: chartjs-render-animation 0.001s;
+				animation: chartjs-render-animation 0.001s;
+			}
+		</style>
+	</head>
+
+	<body>
+		<!--引入抽取的topbar-->
+		<!--模板名：会使用thymeleaf的前后缀配置规则进行解析-->
+		<div th:replace="commons/bar::topbar"></div>
+
+		<div class="container-fluid">
+			<div class="row">
+				<!--引入侧边栏-->
+				<div th:replace="commons/bar::#sidebar(activeUri='customers')"></div>
+
+				<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+					<h4>客户修改页面</h4>
+					<!--需要区分是员工修改还是添加；-->
+					<form th:action="@{/customer/editCustomer}" method="post">
+						<!--发送put请求修改员工数据-->
+						<!--
+						1、SpringMVC中配置HiddenHttpMethodFilter;（SpringBoot自动配置好的）
+						2、页面创建一个post表单
+						3、创建一个input项，name="_method";值就是我们指定的请求方式
+						-->
+						<input type="hidden" name="_method" value="put" />
+						<input type="hidden" name="id" th:value="${customer.id}">
+						<div class="form-group">
+							<label>姓名</label>
+							<input name="name" type="text" class="form-control" th:value="${customer.name}">
+						</div>
+						<div class="form-group">
+							<label>电话</label>
+							<input name="tel" type="text" class="form-control" th:value="${customer.tel}">
+						</div>
+						<div class="form-group">
+							<label>性别</label>
+					<!-- 		<div class="form-check form-check-inline">
+								<input class="form-check-input" type="radio" name="sex" value="1" th:checked="${customer.sex=='1'}">
+								<label class="form-check-label">男</label>
+							</div>
+							<div class="form-check form-check-inline">
+								<input class="form-check-input" type="radio" name="sex" value="0" th:checked="${customer.sex=='0'}">
+								<label class="form-check-label">女</label>
+							</div> -->
+							<select class="form-control" name="sex">
+								<option th:selected="${#strings.isEmpty(customer.sex)}" value="">未知</option>
+								<option th:selected="${customer.sex=='0'}" value="0">女</option>
+								<option th:selected="${customer.sex=='1'}" value="1">男</option>
+							</select>
+						</div>
+						<div class="form-group">
+							<label>公司</label>
+							<input name="company" type="text" class="form-control" th:value="${customer.company}">
+						</div>
+						<div class="form-group">
+							<label>签到状态</label><br/>
+							<div class="form-check form-check-inline">
+								<input class="form-check-input" type="radio" name="siginStatus" value="0" th:checked="${customer.siginStatus=='0'}">
+								<label class="form-check-label">未签</label>
+							</div>
+							<div class="form-check form-check-inline">
+								<input class="form-check-input" type="radio" name="siginStatus" value="1" th:checked="${customer.siginStatus=='1'}">
+								<label class="form-check-label">已签</label>
+							</div>
+							<div class="form-check form-check-inline">
+								<input class="form-check-input" type="radio" name="siginStatus" value="2" th:checked="${customer.siginStatus=='2'}">
+								<label class="form-check-label">现场增加</label>
+							</div>
+						</div>
+						<div class="form-group">
+							<label>座位号</label>
+							<input disabled="disabled" name="seatName" type="text" class="form-control" th:value="${customer.seatName}">
+						</div>
+						<input type="hidden" name="seatId" th:value="${customer.seatId}">
+						<button type="submit" class="btn btn-primary">修改</button>
+					</form>
+				</main>
+			</div>
+		</div>
+
+		<!-- Bootstrap core JavaScript
+    ================================================== -->
+		<!-- Placed at the end of the document so the pages load faster -->
+		<script type="text/javascript" src="asserts/js/jquery-3.2.1.slim.min.js" th:src="@{/webjars/jquery/3.3.1/jquery.js}"></script>
+		<script type="text/javascript" src="asserts/js/popper.min.js" th:src="@{/webjars/popper.js/1.11.1/dist/popper.js}"></script>
+		<script type="text/javascript" src="asserts/js/bootstrap.min.js" th:src="@{/webjars/bootstrap/4.0.0/js/bootstrap.js}"></script>
+
+		<!-- Icons -->
+		<script type="text/javascript" src="asserts/js/feather.min.js" th:src="@{/asserts/js/feather.min.js}"></script>
+		<script>
+			feather.replace()
+		</script>
+
+	</body>
+
+</html>

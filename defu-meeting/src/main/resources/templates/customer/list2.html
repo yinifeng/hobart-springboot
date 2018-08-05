@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>分页测试</title>
+<meta name="author" content="" />
+<meta name="description" content="" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="" th:href="@{/webjars/bootstrap/4.0.0/css/bootstrap.css}"
+	rel="stylesheet">
+<!-- Placed at the end of the document so the pages load faster -->
+<script type="text/javascript" src=""
+	th:src="@{/webjars/jquery/3.3.1/jquery.js}"></script>
+<script type="text/javascript" src=""
+	th:src="@{/webjars/popper.js/1.11.1/dist/popper.js}"></script>
+<script type="text/javascript" src=""
+	th:src="@{/webjars/bootstrap/4.0.0/js/bootstrap.js}"></script>
+
+</head>
+
+<body>
+	<div class="container">
+		<div clas="row">
+			
+				<table class="table table-hover table-condensed table-bordered">
+					<thead>
+						<tr>
+							<th>#</th>
+							<th>姓名</th>
+							<th>电话</th>
+							<th>性别</th>
+							<th>公司</th>
+							<th>签到状态</th>
+							<th>座位号</th>
+							<th>操作</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="custmoer:${pageInfo.list}">
+							<td><a href="#"
+								th:href="@{/customer/updateCustomer/}+${custmoer.id}">[[${custmoer.id}]]</a></td>
+							<td>[[${custmoer.name}]]</td>
+							<td th:text="${custmoer.tel}"></td>
+							<td
+								th:text="${custmoer.sex} == '1' ? '男' : (${custmoer.sex} == '0' ? '女' : '')"></td>
+							<td th:text="${custmoer.company}"></td>
+							<td
+								th:text="${custmoer.siginStatus}=='0' ? '未签' : (${custmoer.siginStatus}=='1' ? '已签' : '现场增加')"></td>
+							<td th:text="${custmoer.seatName}"></td>
+							<td></td>
+						</tr>
+					</tbody>
+				</table>
+		
+		</div>
+
+		<div class="row">
+				<div class="col-md-6">当前第 [[${pageInfo.pageNum}]] 页,总共 [[${pageInfo.pages}]] 页,总共
+					[[${pageInfo.total}]] 条记录</div>
+				<div class="col-md-6">
+					<ul class="pagination">
+					
+						<li class="page-item"><a class="page-link" th:href="@{/customer/list2?pn=1}">首页</a></li>
+						<li class="page-item" th:if="${pageInfo.hasPreviousPage}">
+							<a class="page-link" href="#"
+							aria-label="Previous" th:href="@{/customer/list2?pn=}+${pageInfo.pageNum-1}"> <span aria-hidden="true">&laquo;</span>
+							</a>
+						</li>
+						<li class="page-item" th:each="page_Num:${pageInfo.navigatepageNums}" th:class="${page_Num == pageInfo.pageNum ? 'page-item active':'page-item'}">
+							<a class="page-link" href="#" th:href="@{/customer/list2?pn=}+${page_Num}">[[${page_Num}]]</a>
+						</li>
+						<li class="page-item" th:if="${pageInfo.hasNextPage}">
+							<a class="page-link" href="#"
+							aria-label="Next" th:href="@{/customer/list2?pn=}+${pageInfo.pageNum+1}"> <span aria-hidden="true">&raquo;</span>
+							</a>
+						</li>
+						<li class="page-item">
+							<a class="page-link" href="#" th:href="@{/customer/list2?pn=}+${pageInfo.pages}">末页</a>
+						</li>
+					</ul>
+				</div>
+		</div>
+	</div>
+</body>
+</html>

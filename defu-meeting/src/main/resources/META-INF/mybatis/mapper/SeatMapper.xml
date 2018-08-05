@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.defu.meeting.dao.SeatDao">
+	<!-- 插入数据 -->
+	<insert id="insert" parameterType="com.defu.meeting.model.Seat">
+		<!-- 
+			获取插入数据后的主键
+			1、mysql自增    相对insert语句after
+			2、oracle 序列     select 序列.nextval()  相对insert语句 before
+		 -->
+		<selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+			select LAST_INSERT_ID()
+		</selectKey>
+		insert into df_seat(seatName,status,crt_time,up_time,enable_flg) values (#{seatName},#{status},#{crt_time},#{up_time},#{enable_flg})
+	</insert>
+	
+	<select id="findSeatById" resultType="com.defu.meeting.model.Seat">
+		select * from df_seat where id=#{id} and enable_flg='1'
+	</select>
+	
+	<update id="updateSeat" parameterType="com.defu.meeting.model.Seat">
+		update df_seat set seatName=#{seatName},status=#{status},up_time=#{up_time} where id=#{id} and enable_flg='1'
+	</update>
+	
+	<select id="findAll" resultType="com.defu.meeting.model.Seat">
+		select * from df_seat where enable_flg='1'
+	</select>
+	
+	<select id="findByStatus" resultType="com.defu.meeting.model.Seat">
+		select * from df_seat where status=#{status} and enable_flg='1'
+	</select>
+	
+</mapper>
