@@ -2,14 +2,12 @@ package com.hobart.boot.quartz.config;
 
 import com.hobart.boot.quartz.enums.JobStaus;
 import com.hobart.boot.quartz.model.BaseModel;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.Configuration;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Configuration
-@ConfigurationProperties(prefix = "jiayuan.schedule")
+//@Configuration
+//@ConfigurationProperties(prefix = "jiayuan.schedule")
 public class JobProperties extends BaseModel {
 
     private static final long serialVersionUID = -1191155855117916615L;
