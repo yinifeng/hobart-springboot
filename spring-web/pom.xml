@@ -10,7 +10,7 @@
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>4.12</version>
+			<version>4.13.1</version>
 			<scope>test</scope>
 			<!-- scope作用域 基本的3个 test complied provided test 测试有效 不参与打包 complied 编译打包 
 				都有效 参与打包 默认作用域范围 provided 编译时有效 不打包 不部署 运行时由web容器提供 -->
